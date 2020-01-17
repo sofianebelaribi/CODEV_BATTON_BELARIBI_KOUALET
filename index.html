@@ -1,0 +1,147 @@
+<html>
+    <head>
+        <title>007</title>
+        <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+          <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+          <div class="row row-image">
+            <img src="007.png" class="img-fluid logo" alt="Responsive image">
+          </div>
+
+            <!-- Element de la page 1 -->
+            <div class="row" id="userFormArea">
+                <div class="col-md-12">
+                    <form id="userForm">
+                        <div class="form-group form-username row">
+                            <label class="col-form-label col-sm-2 " for="username">Username</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" id="username" placeholder="Enter Username" />
+                            </div>
+                        </div>
+                        <div class="login">
+                          <input type="submit" class="btn btn-primary btn-login" value="Login" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <form id="userFormBd">
+                <div class="form-group form-username row">
+                    <label class="col-form-label col-sm-2 " for="usernameBd">UsernameBD</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="usernameBd" placeholder="Enter Username" />
+                    </div>
+                </div>
+                <div class="login">
+                  <input type="submit" class="btn btn-primary btn-login" value="LoginBd" />
+                </div>
+                <div class="form-signup" id="form-signup">
+                  <div id="btn-signUp" class="btn btn-primary btn-login" value="btn-signup">Sign Up</div>
+                </div>
+            </form>
+
+
+            <div id="alert" class="alert alert-danger" role="alert">Identifiant ou mot de passe incorrect </div>
+
+
+            <form id="signUp">
+                <div class="form-group form-username row">
+                    <label class="col-form-label col-sm-2 " for="usernameSignUp">Username</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="usernameSu" placeholder="Enter username" />
+                    </div>
+                </div>
+                <div class="form-group form-username row">
+                    <label class="col-form-label col-sm-2 " for="userPassword">Password</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="userPasswordSu" placeholder="Enter password" />
+                    </div>
+                </div>
+                <div class="form-group form-username row">
+                    <label class="col-form-label col-sm-2 " for="userFirstname">Firstname</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="userFirstnameSu" placeholder="Enter your firstname" />
+                    </div>
+                    <label class="col-form-label col-sm-2 " for="userFirstname">Lastname</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="userLastnameSu" placeholder="Enter your name" />
+                    </div>
+                </div>
+                <div class="login">
+                  <input type="submit" class="btn btn-primary btn-login" value="SignUpBd" />
+                </div>
+
+            </form>
+
+
+            <!-- Element de la page 2 -->
+            <div class="row" id="gameArea">
+                <div class="col-md-4">
+                    <div class="well">
+                        <h3>Online Users</h3>
+                        <ul class="list-group" id="users"></ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <form class="sectionArea" id="game">
+                        <h4>Choices</h4>
+
+                        <input class="form-check-input" id="shoot" type="radio" name="choice" value="shoot" checked />
+                        <label class="form-check-label" for="shoot">shoot</label>
+                        <br />
+
+                        <input class="form-check-input" id="reload" type="radio" name="choice" value="reload" />
+                        <label class="form-check-label" for="reload">reload</label>
+                        <br />
+
+                        <input class="form-check-input" id="hedge" type="radio" name="choice" value="hedge" />
+                        <label class="form-check-label" for="hedge">hedge</label>
+                        <br />
+
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </form>
+
+                    <div class="sectionArea">
+                        <h4>Information</h4>
+                        <p id="info" class="text-info">Waiting for players...</p>
+                    </div>
+
+                    <div class="container navbar-fixed-bottom">
+                        <div class="chat pre-scrollable" id="chat"></div>
+                        <form id="messageForm">
+                            <label>Enter Message</label>
+                            <textarea class="form-control" id="message">
+                            </textarea>
+                            <br />
+                            <input type="submit" class="btn btn-primary" value="Send message" />
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="row">
+                    <p>Nombre de balle dans le chargeur :</p>
+                    <p id="bullets"></p>
+                  </div>
+                    <div class="row">
+                      <p>Nombre de vie restante <span id="player1"></span> :</p>
+                      <p id="live-1"></p>
+                    </div>
+                    <div class="row">
+                      <p>Nombre de vie restante <span id="player2"></span> :</p>
+                      <p id="live-2"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script src="client.js"></script>
+
+    </body>
+</html>

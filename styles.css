@@ -1,0 +1,48 @@
+body {
+    margin-top: 30px;
+}
+#gameArea {
+    display: none;
+}
+.sectionArea {
+    margin-bottom: 30px;
+}
+.chat {
+    height: 340px;
+}
+
+.logo{
+  width: 30%;
+}
+
+.row-image{
+  margin-right: auto;
+  text-align: center;
+  margin-left: auto;
+}
+
+#userFormArea {
+  margin-top: 25vh;
+}
+
+#username{
+  border-radius: 15px;
+}
+
+.login{
+  margin-right: auto;
+  text-align: center;
+  margin-left: auto;
+}
+
+.btn-login{
+    padding-right: 30px;
+    padding-left: 30px;
+    border-radius: 15px;
+    border-color: #CEB887;
+    background-color: #CEB887;
+}
+
+.form-username{
+  margin-bottom: 40px;
+}
