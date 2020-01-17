@@ -47,15 +47,16 @@ io.sockets.on('connection', function(socket) {
         socket.emit('result', [{ name: 'not found' }])
       } else {
 
-        users.push(socket.usernameBd);
         updateUsernames();
         callback(true);
         // if(err) console.log('oh no!!')
         // console.log(pid[0].person_id)
         if (Object.keys(users).length == 2)
         {
+
           io.emit('connected', socket.usernameBd);
           io.emit('game start');
+          Object.keys(users)=null;
         }
       }
     })
@@ -176,7 +177,7 @@ io.sockets.on('connection', function(socket) {
         switch (choices[1]['choice'])
         {
           case 'shoot':
-          io.emit('player 1 & 2 win', choices);
+          io.emit('tie', choices);
           break;
 
           case 'reload':

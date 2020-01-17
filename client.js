@@ -238,32 +238,35 @@ socket.on('tie', function (choices) {
 });
 
 socket.on('player 1 win', function (choices) {
-  countdown(choices);
+        countdown(choices);
 
-  setTimeout(function () {
-    $info.append('<br />' + choices[0]['user'] + ' wins!');
-  }, 5000);
-  liveNumberP2 --;
-  $('#live-2').text(liveNumberP2);
-  if(liveNumberP2==0){
-    alert("Player 1 win");
-  }
-  submitted = false;
-});
+        setTimeout(function () {
+            $info.append('<br />' + choices[0]['user'] + ' wins!');
+            liveNumberP2 --;
+            $('#live-2').text(liveNumberP2);
+            if(liveNumberP2==0){
+              if(alert('Player 1 win')){}
+              else    window.location.reload();
+            }
 
-socket.on('player 2 win', function (choices) {
-  countdown(choices);
+            submitted = false;
+        }, 5000);
+    });
 
-  setTimeout(function() {
-    $info.append('<br />' + choices[1]['user'] + ' wins!');
-  }, 5000);
-  liveNumberP1 --;
-  $('#live-1').text(liveNumberP1);
-  if(liveNumberP1==0){
-    alert("Player 2 win");
-  }
-  submitted = false;
-});
+    socket.on('player 2 win', function (choices) {
+          countdown(choices);
+
+          setTimeout(function() {
+              $info.append('<br />' + choices[1]['user'] + ' wins!');
+              liveNumberP1 --;
+              $('#live-1').text(liveNumberP1);
+              if(liveNumberP1==0){
+                if(alert('Player 2 win')){}
+                else    window.location.reload();
+              }
+              submitted = false;
+          }, 5000);
+      });
 
 function countdown(choices) {
   setTimeout(function() {
