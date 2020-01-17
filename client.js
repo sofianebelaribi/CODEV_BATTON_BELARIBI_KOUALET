@@ -19,7 +19,7 @@ $(function init() {
   $('#live-2').text(liveNumberP2);
   var userFormBd=$('#userFormBd');
   var sp = $('#sp');
-  let s=$("#usernameBd");
+  let usernameBd=$("#usernameBd");
   var $alert = $('#alert');
   var $signUp=$('#signUp');
   let $usernameSu=$('#usernameSu');
