@@ -1,247 +1,138 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-const mysql = require('mysql');
-users = [];
-connections = [];
-choices = [];
+const express = require('express');
+const path = require('path');
 
-server.listen(process.env.PORT || 3000);
-console.log('Sever running...');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+let rooms = 0;
+let choices = [];
+
+
 app.use(express.static('.'));
-app.get('/', function(rer, res) {
-  res.sendFile(__dirname + '/index.html')
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-io.sockets.on('connection', function(socket) {
-  connections.push(socket);
-  console.log('Connected: %s sockets connected', connections.length);
-  const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'codev'
-  })
+io.on('connection', (socket) => {
+    // Create a new game room and notify the creator of game.
+    socket.on('createGame', (data) => {
+        socket.join(`room-${++rooms}`);
+        socket.emit('newGame', { name: data.name, room: `room-${rooms}` });
+    });
 
-  connection.query("SELECT id FROM users WHERE user_name='admin'", (err, res) => {
-    //socket.emit('userslist', res)
-    console.log(res)
-  })
-
-  // BD
-  socket.on('find', function(data, callback) {
-    const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'codev'
-    })
-    socket.usernameBd = data;
-    console.log(data)
-    var query="SELECT id FROM users WHERE user_name = '" + data + "'"
-    console.log(query)
-    connection.query("SELECT user_name FROM users WHERE user_name = '" + data + "'", (err, res) => {
-      console.log(res)
-      if (Array.from(res).length === 0) {
-        socket.emit('result', [{ name: 'not found' }])
-      } else {
-
-        updateUsernames();
-        callback(true);
-        // if(err) console.log('oh no!!')
-        // console.log(pid[0].person_id)
-        if (Object.keys(users).length == 2)
-        {
-
-          io.emit('connected', socket.usernameBd);
-          io.emit('game start');
-          Object.keys(users)=null;
+    // Connect the Player 2 to the room he requested. Show error if room full.
+    socket.on('joinGame', (data) => {
+        const room = io.nsps['/'].adapter.rooms[data.room];
+        if (room && room.length === 1) {
+            socket.join(data.room);
+            socket.broadcast.to(data.room).emit('player1', {});
+            socket.emit('player2', { name: data.name, room: data.room });
+        } else {
+            socket.emit('err', { message: 'Sorry, The room is full!' });
         }
-      }
-    })
-  })
+    });
 
-  socket.on('insertUser', function(data) {
-    usernameSu = data.username;
-    userPasswordSu = data.password;
-    userFirstnameSu = data.firstname;
-    userLastnameSu = data.lastname;
-
-    //      var query="INSERT INTO users(first_name,last_name,user_name,password,win) VALUES( '" + userFirstnameSu + "'" + ",'" + userLastnameSu + "','" + usernameSu + "','" + userPasswordSu + "',"+ 0 + ")"
-    //  console.log(query);
-    const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'codev'
-    })
-
-    connection.query("INSERT INTO users(first_name,last_name,user_name,password,win) VALUES( '" + userFirstnameSu + "'" + ",'" + userLastnameSu + "','" + usernameSu + "','" + userPasswordSu + "',"+ 0 + ")", (err, res) => {
-      console.log("res "+res);
-      if (Array.from(res).length === null) {
-        socket.emit('result', [{ name: 'not found' }])
-      } else {
-        //    io.emit('connected', usernameSu);
-        io.emit('home');
-      }
-
-    })
-  })
-
-
-
-
-
-
-
-  socket.on('disconnect', function(data) {
-
-    if(socket.usernameBd){
-      users.splice(users.indexOf(socket.usernameBd), 1);
-      updateUsernames();
-      connections.splice(connections.indexOf(socket), 1)
-      io.emit('disconnected', socket.usernameBd);
-    }
-    if(socket.username){
-      users.splice(users.indexOf(socket.username), 1);
-      updateUsernames();
-      connections.splice(connections.indexOf(socket), 1)
-      io.emit('disconnected', socket.username);
-    }
-
-    console.log('Disconnected: %s sockets connected', connections.length);
-  });
-
-  socket.on('send message', function(data) {
-    if(socket.usernameBd){
-      io.sockets.emit('new message', {msg: data, user: socket.usernameBd});
-    }
-    else{
-      io.sockets.emit('new message', {msg: data, user: socket.username});
-    }
-
-
-  });
-
-  socket.on('add user', function(data, callback) {
-    socket.username = data;
-
-    if(users.indexOf(socket.username) > -1)
-    {
-      callback(false);
-    }
-    else
-    {
-      users.push(socket.username);
-      updateUsernames();
-      callback(true);
-
-      if (Object.keys(users).length == 2)
-      {
-        io.emit('connected', socket.username);
-        io.emit('game start');
-      }
-    }
-  });
-
-
-
-
-
-
-
-
-
-  socket.on('player choice', function (username, usernameBd, choice) {
-
-
-    if(usernameBd != null && username==''){
-      choices.push({'user': usernameBd, 'choice': choice});
-      console.log('%s chose %s.', usernameBd, choice);
-    }
-    if(username != null & usernameBd==''){
-      choices.push({'user': username, 'choice': choice});
-      console.log('%s chose %s.', username, choice);
-    }
-
-
-
-    if(choices.length == 2)
-    {
-      console.log('[socket.io] Both players have made choices.');
-
-      switch (choices[0]['choice'])
-      {
-        case 'shoot':
-        switch (choices[1]['choice'])
-        {
-          case 'shoot':
-          io.emit('tie', choices);
-          break;
-
-          case 'reload':
-          io.emit('player 1 win', choices);
-          break;
-
-          case 'hedge':
-          io.emit('tie', choices);
-          break;
-
-          default:
-          break;
+    socket.on('player choice', (data) => {
+        if(data.username != null) {
+            if (data.type === "X") {
+                choices[0] = {
+                    'user': data.username,
+                    'choice': data.choice
+                };
+                console.log('%s chose %s.', data.username, data.choice);
+            }
+            else {
+                choices[1] = {
+                    'user': data.username,
+                    'choice': data.choice
+                };
+                console.log('%s chose %s.', data.username, data.choice);
+            }
         }
-        break;
 
-        case 'reload':
-        switch (choices[1]['choice'])
-        {
-          case 'shoot':
-          io.emit('player 2 win', choices);
-          break;
+        if (choices.length === 2 && choices[0] != null && choices[1] != null) {
+            console.log('[socket.io] Both players have made choices.');
+            console.log(choices)
 
-          case 'reload':
-          io.emit('tie', choices);
-          break;
+            switch (choices[0].choice) {
+                case 'shoot':
+                    switch (choices[1].choice) {
+                        case 'shoot':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
 
-          case 'hedge':
-          io.emit('tie', choices);
-          break;
+                        case 'reload':
+                            socket.broadcast.to(data.room).emit('player 1 win', choices);
+                            socket.emit('player 1 win', choices);
+                            break;
 
-          default:
-          break;
+                        case 'hedge':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 'reload':
+                    switch (choices[1].choice) {
+                        case 'shoot':
+                            socket.broadcast.to(data.room).emit('player 2 win', choices);
+                            socket.emit('player 2 win', choices);
+                            break;
+
+                        case 'reload':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            // socket.to(data.room).emit('tie', choices);
+                            break;
+
+                        case 'hedge':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 'hedge':
+                    switch (choices[1].choice) {
+                        case 'shoot':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
+
+                        case 'reload':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
+
+                        case 'hedge':
+                            socket.broadcast.to(data.room).emit('tie', choices);
+                            socket.emit('tie', choices);
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            choices = [];
+            console.log(choices);
         }
-        break;
+    });
 
-        case 'hedge':
-        switch (choices[1]['choice'])
-        {
-          case 'shoot':
-          io.emit('tie', choices);
-          break;
-
-          case 'reload':
-          io.emit('tie', choices);
-          break;
-
-          case 'hedge':
-          io.emit('tie', choices);
-          break;
-
-          default:
-          break;
-        }
-        break;
-
-        default:
-        break;
-      }
-
-      choices = [];
-    }
-  });
-
-  function updateUsernames() {
-    io.sockets.emit('get user', users);
-  }
 });
+
+server.listen(process.env.PORT || 5000);
