@@ -19,7 +19,7 @@
     let game;
 
     // const socket = io.connect('http://tic-tac-toe-realtime.herokuapp.com'),
-    const socket = io.connect('http://localhost:5000');
+    const socket = io.connect('http://localhost:3000');
 
     class Player {
         constructor(name, type, lives, bullets) {
@@ -184,7 +184,7 @@
         countdown(choices);
         setTimeout(function() {
             $info.append("<br />Everybody's still alive !");
-        }, 5000);
+        }, 3000);
 
         submitted = false;
     });
@@ -197,7 +197,7 @@
 
         setTimeout(function () {
             $info.append('<br />' + choices[0]['user'] + ' wins!');
-        }, 5000);
+        }, 3000);
         console.log(player.type);
         if (player.type === "O") {
             console.log("player.type is O");
@@ -222,7 +222,7 @@
 
         setTimeout(function () {
             $info.append('<br />' + choices[1]['user'] + ' wins!');
-        }, 5000);
+        }, 3000);
         console.log(player.type);
         if (player.type === "X"){
             console.log("player.type is X");
