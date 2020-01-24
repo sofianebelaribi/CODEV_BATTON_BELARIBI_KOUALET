@@ -5,6 +5,10 @@
     const $username = $('#username');
     const $game = $('#game');
     const $info = $('#info');
+    let userFormBd=$('#userFormBd');
+    let usernameBd=$("#usernameBd");
+    let passwordBd=$("#passwordBd");
+    let formSignUp=$("#formSignUp");
     let submitted = false;
     let lives = 3;
     let bullets = 3;
@@ -52,10 +56,77 @@
             return this.roomId;
         }
     }
+    // --------STEP 1----------//
+    // get to step 2
+    //next step without
+    $('#next').on('click', () => {
+        const name = $('#nickname').val();
+        if (!name) {
+            alert('Please enter your name.');
+            return;
+        }
+        $('#step1').css('display', 'none');
+        $('#step2').css('display', 'block');
+    });
+    // Sign In
+    userFormBd.submit(function(e) {
+        e.preventDefault();
+        socket.emit('find', {username : usernameBd.val(), password :passwordBd.val()});
+        usernameBd.val();
+        event.preventDefault()
+    });
 
+    //if connected go to next step
+    socket.on('result', (data) => {
+        if (Array.from(data.res).length === 0) {
+            alert("password or username wrong")
+        }
+        else{
+            $("#nickname").val(data.username);
+            $('#step1').css('display', 'none');
+            $('#step2').css('display', 'block');
+        }
+    });
+
+    //Sign Up
+    $("#signUp").click( function()
+    {
+        $('.menu').hide();
+        $('#formSignUp').css('display', 'block');
+    });
+
+    // form signup
+    formSignUp.submit(function(e) {
+        e.preventDefault();
+        let dataSignUp={
+            username : $("#usernameSu").val(),
+            password : $("#userPasswordSu").val(),
+            firstname: $("#userFirstnameSu").val(),
+            lastname:  $("#userLastnameSu").val()
+        };
+        socket.emit('insertUser',dataSignUp);
+        event.preventDefault()
+    });
+
+    //check signup if ok go to menu
+    socket.on('checkSignUp', (data) => {
+        if (Array.from(data.res).length === null) {
+            alert("signup went wrong !")
+        }
+        else{
+            $('#formSignUp').css('display', 'none');
+            $('.menu').show();
+            // $('#step1').css('display', 'none');
+            // $('#step2').css('display', 'block');
+        }
+    });
+
+
+
+    // --------STEP 2----------//
     // Create a new game. Emit newGame event.
     $('#new').on('click', () => {
-        const name = $('#nameNew').val();
+        const name = $('#nickname').val();
         if (!name) {
             alert('Please enter your name.');
             return;
@@ -66,7 +137,7 @@
 
     // Join an existing game on the entered roomId. Emit the joinGame event.
     $('#join').on('click', () => {
-        const name = $('#nameJoin').val();
+        const name = $('#nickname').val();
         const roomID = $('#room').val();
         if (!name || !roomID) {
             alert('Please enter your name and game ID.');

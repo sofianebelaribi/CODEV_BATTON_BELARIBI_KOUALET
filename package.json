@@ -10,13 +10,13 @@
   "author": "Equipe projet Codev",
   "license": "MIT",
   "dependencies": {
-    "express": "*",
-    "mysql": "^2.17.1",
-    "nodemon": "*",
-    "socket.io": "*",
-    "jquery": "^3.1.1",
     "body-parser": "^1.15.2",
+    "express": "*",
+    "jquery": "^3.1.1",
+    "mysql": "^2.18.1",
+    "nodemon": "*",
     "skeleton": "^0.1.2",
-    "skeleton-css": "^2.0.4"
+    "skeleton-css": "^2.0.4",
+    "socket.io": "*"
   }
 }

@@ -18,37 +18,69 @@
       <li>Player 2 Enter another username and the room id that is displayed on first window.</li>
       <li>Click on join game. </li>
     </ol>
-    <h4>Create a new Game</h4>
-    <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
-    <button id="new">New Game</button>
-    <br><br>
-    <h4>Join an existing game</h4>
-    <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
-    <input type="text" name="room" id="room" placeholder="Enter Game ID" required>
-    <button id="join">Join Game</button>
+    <!--STEP 1-->
+    <div id="step1">
+      <div id="newName">
+        <input type="text" name="name" id="nickname" placeholder="Enter your name" required>
+        <button id="next">New Game</button>
+      </div>
+      <!-- for username -->
+      <!--<div id="connect">-->
+      <!--<br>-->
+      <!--<input type="text" name="name" id="nickname" placeholder="Enter your account" required>-->
+      <!--</div>-->
+      <form id="userFormBd">
+        <br>
+        <input type="text" id="usernameBd" placeholder="Enter Username"/>
+        <input type="password" id="passwordBd" placeholder="Enter password"/>
+        <button id="loginBd">Login</button>
+      </form>
+    </div>
+    <!--SIGNUP -->
+    <button id="signUp">Sign Up</button>
+    <!--STEP 2-->
+    <div id="step2" style="display: none;">
+      <div id="newGame" >
+        <h4>Create a new Game</h4>
+        <button id="new">New Game</button>
+        <br>
+      </div>
+      <div id="joinGame">
+        <h4>Join an existing game</h4>
+        <input type="text" name="room" id="room" placeholder="Enter Game ID" required>
+        <button id="join">Join Game</button>
+      </div>
+    </div>
   </div>
 
-  <!--<div class="gameBoard" style="display: none;">-->
-  <!--<h2 id="userHello"></h2>-->
-  <!--<h3 id="turn"></h3>-->
-  <!--<table class="center">-->
-  <!--<tr>-->
-  <!--<td><button class="tile" id="button_00"></button></td>-->
-  <!--<td><button class="tile" id="button_01"></button></td>-->
-  <!--<td><button class="tile" id="button_02"></button></td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-  <!--<td><button class="tile" id="button_10"></button></td>-->
-  <!--<td><button class="tile" id="button_11"></button></td>-->
-  <!--<td><button class="tile" id="button_12"></button></td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-  <!--<td><button class="tile" id="button_20"></button></td>-->
-  <!--<td><button class="tile" id="button_21"></button></td>-->
-  <!--<td><button class="tile" id="button_22"></button></td>-->
-  <!--</tr>-->
-  <!--</table>-->
-  <!--</div>-->
+  <!-- Element de la page Signup -->
+  <form id="formSignUp" style="display:none">
+    <div class="form-group form-username row">
+      <label class="col-form-label col-sm-2">Username</label>
+      <div class="col-sm-10">
+        <input class="form-control" id="usernameSu" placeholder="Enter username" />
+      </div>
+    </div>
+    <div class="form-group form-username row">
+      <label class="col-form-label col-sm-2">Password</label>
+      <div class="col-sm-10">
+        <input class="form-control" id="userPasswordSu" placeholder="Enter password" />
+      </div>
+    </div>
+    <div class="form-group form-username row">
+      <label class="col-form-label col-sm-2 ">Firstname</label>
+      <div class="col-sm-4">
+        <input class="form-control" id="userFirstnameSu" placeholder="Enter your firstname" />
+      </div>
+      <label class="col-form-label col-sm-2 ">Lastname</label>
+      <div class="col-sm-4">
+        <input class="form-control" id="userLastnameSu" placeholder="Enter your name" />
+      </div>
+    </div>
+    <div class="login">
+      <input type="submit" class="btn btn-primary btn-login" value="SignUpBd" />
+    </div>
+  </form>
 
   <div class="row" id="gameArea" style="display: none;">
     <h2 id="userHello"></h2>
@@ -76,16 +108,6 @@
         <h4>Information</h4>
         <p id="info" class="text-info">Waiting for players...</p>
       </div>
-
-      <!--<div class="container navbar-fixed-bottom">-->
-      <!--<div class="chat pre-scrollable" id="chat"></div>-->
-      <!--<form id="messageForm">-->
-      <!--<label>Enter Message</label>-->
-      <!--<textarea class="form-control" id="message"/>-->
-      <!--<br />-->
-      <!--<input type="submit" class="btn btn-primary" value="Send message" />-->
-      <!--</form>-->
-      <!--</div>-->
     </div>
     <div class="col-md-2">
       <div class="row">
