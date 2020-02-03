@@ -25,6 +25,12 @@
     // const socket = io.connect('http://tic-tac-toe-realtime.herokuapp.com'),
     const socket = io.connect('http://localhost:3000');
 
+    $('.logo').css('cursor', 'pointer')
+    $('.logo').click(function() {
+        location.reload();
+    });
+
+
     class Player {
         constructor(name, type, lives, bullets) {
             this.name = name;
@@ -140,7 +146,7 @@
         const name = $('#nickname').val();
         const roomID = $('#room').val();
         if (!name || !roomID) {
-            alert('Please enter your name and game ID.');
+            alert('Please enter a correct game ID.');
             return;
         }
         socket.emit('joinGame', { name, room: roomID });
@@ -150,7 +156,7 @@
     // New Game created by current client. Update the UI and create new Game var.
     socket.on('newGame', (data) => {
         const message =
-            `Hello, ${data.name}. Please ask your friend to enter Game ID: 
+            `Hello, ${data.name}. Please ask your friend to enter Game ID:
       ${data.room}. Waiting for player 2...`;
 
         // Create game for player 1

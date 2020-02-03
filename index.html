@@ -1,88 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="node_modules/skeleton-css/css/skeleton.css">
-  <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <title>007</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="node_modules/skeleton-css/css/skeleton.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
   <div id="roomID" style="display: none;"></div>
   <div class="menu">
-    <h1>Tic - Tac - Toe</h1>
-    <h3>How To Play</h3>
-    <ol>
-      <li>Player 1 Create a new game by entering the username</li>
-      <li>Player 2 Enter another username and the room id that is displayed on first window.</li>
-      <li>Click on join game. </li>
-    </ol>
+    <div class="row div-logo">
+      <img src="007.png" class="logo" alt="">
+    </div>
+
+
+    <div class="row rules">
+      <h3 class="col-md-12 col-sm-12">How to play</h3>
+      <p class="col-md-12 col-sm-12 margin-0">Le joueur se connecte soit en choississant un nom public soit avec son compte</p>
+      <p class="col-md-12 col-sm-12 margin-0">Il peut ensuite soit crée une room soit en rejoindre une </p>
+      <p class="col-md-12 col-sm-12">La partie commence lorsque 2 joueurs se trouvent dans la même room </p>
+    </div>
     <!--STEP 1-->
     <div id="step1">
-      <div id="newName">
-        <input type="text" name="name" id="nickname" placeholder="Enter your name" required>
-        <button id="next">New Game</button>
+      <h1 class="title">Choose a username</h1>
+      <hr>
+      <div id="newName" class="row">
+        <input class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" type="text" name="name" id="nickname" placeholder="Enter your name" required>
+        <button class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" type="button"  id="next">New Game</button>
       </div>
-      <!-- for username -->
-      <!--<div id="connect">-->
-      <!--<br>-->
-      <!--<input type="text" name="name" id="nickname" placeholder="Enter your account" required>-->
-      <!--</div>-->
+
+
       <form id="userFormBd">
-        <br>
-        <input type="text" id="usernameBd" placeholder="Enter Username"/>
-        <input type="password" id="passwordBd" placeholder="Enter password"/>
-        <button id="loginBd">Login</button>
+        <h1 class="title">Sign in</h1>
+        <hr>
+        <div class="row">
+          <input class="offset-md-2 col-md-3 col-sm-6 input-form col-sm-8 col-8 offset-2" type="text" id="usernameBd" placeholder="Enter Username"/>
+          <input class="col-md-3 offset-md-2 col-sm-6 input-form col-sm-8 col-8 offset-2" type="password" id="passwordBd" placeholder="Enter password"/>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary col-md-3 col-sm-8 col-8 offset-2 btn-home" id="loginBd">Login</button>
+        </div>
+
       </form>
+      <div class="row">
+        <button type="button" class="btn col-md-3 col-sm-8 col-8 offset-2 btn-primary btn-home" id="signUp">Sign Up</button>
+      </div>
+
     </div>
     <!--SIGNUP -->
-    <button id="signUp">Sign Up</button>
+
     <!--STEP 2-->
     <div id="step2" style="display: none;">
-      <div id="newGame" >
-        <h4>Create a new Game</h4>
-        <button id="new">New Game</button>
-        <br>
+      <div id="newGame">
+        <h1 class="title">Create a new Game</h1>
+        <hr>
+        <div class="row">
+          <button class="btn btn-primary btn-home col-md-3 col-sm-8 col-8 offset-2 "  id="new">New Game</button>
+        </div>
       </div>
       <div id="joinGame">
-        <h4>Join an existing game</h4>
-        <input type="text" name="room" id="room" placeholder="Enter Game ID" required>
-        <button id="join">Join Game</button>
+        <h1 class="title">Join an existing game</h1>
+        <hr>
+        <div class="row">
+          <input type="text" name="room" id="room" placeholder="Enter Game ID" class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" required>
+          <button type="button" class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" id="join">Join Game</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Element de la page Signup -->
   <form id="formSignUp" style="display:none">
+    <div class="row div-logo">
+      <img src="007.png" class="logo" alt="">
+    </div>
+    <h1 class="title">Sign up</h1>
+    <hr>
     <div class="form-group form-username row">
-      <label class="col-form-label col-sm-2">Username</label>
-      <div class="col-sm-10">
+
+      <div class="col-sm-10 offset-md-1">
         <input class="form-control" id="usernameSu" placeholder="Enter username" />
       </div>
     </div>
     <div class="form-group form-username row">
-      <label class="col-form-label col-sm-2">Password</label>
-      <div class="col-sm-10">
+      <div class="col-sm-10 offset-md-1">
         <input class="form-control" id="userPasswordSu" placeholder="Enter password" />
       </div>
     </div>
     <div class="form-group form-username row">
-      <label class="col-form-label col-sm-2 ">Firstname</label>
-      <div class="col-sm-4">
+      <div class="col-sm-4 offset-md-1">
         <input class="form-control" id="userFirstnameSu" placeholder="Enter your firstname" />
       </div>
-      <label class="col-form-label col-sm-2 ">Lastname</label>
-      <div class="col-sm-4">
+      <div class="col-sm-4 offset-md-2">
         <input class="form-control" id="userLastnameSu" placeholder="Enter your name" />
       </div>
     </div>
     <div class="login">
-      <input type="submit" class="btn btn-primary btn-login" value="SignUpBd" />
+      <input class="btn btn-primary btn-sign-up btn-home col-md-3 col-sm-8 col-8 offset-2" type="submit" value="Sign Up" />
     </div>
   </form>
 
   <div class="row" id="gameArea" style="display: none;">
+    <div class="row div-logo">
+      <img src="007.png" class="logo" alt="">
+    </div>
     <h2 id="userHello"></h2>
 
     <div class="col-md-6">
@@ -127,7 +149,10 @@
   </div>
 
 </div>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
 </body>
