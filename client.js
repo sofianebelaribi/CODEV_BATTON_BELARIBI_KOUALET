@@ -308,7 +308,9 @@
 
     setTimeout(function() {
       $info.html("<br />Make your choice");
-    }, 8000);
+      $('#gif1').attr('src', 'waiting.png');
+      $('#gif2').attr('src', 'waiting.png');
+    }, 9000);
 
     submitted = false;
   });
@@ -324,7 +326,9 @@
     }, 5000);
     setTimeout(function() {
       $info.html("<br />Make your choice");
-    }, 8000);
+      $('#gif1').attr('src', 'waiting.png');
+      $('#gif2').attr('src', 'waiting.png');
+    }, 9000);
     console.log(player.type);
     if (player.type === "O") {
       console.log("player.type is O");
@@ -352,7 +356,9 @@
     }, 5000);
     setTimeout(function() {
       $info.html("<br />Make your choice");
-    }, 8000);
+      $('#gif1').attr('src', 'waiting.png');
+      $('#gif2').attr('src', 'waiting.png');
+    }, 9000);
     console.log(player.type);
     if (player.type === "X"){
       console.log("player.type is X");
