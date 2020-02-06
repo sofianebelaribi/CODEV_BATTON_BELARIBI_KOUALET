@@ -11,7 +11,7 @@ let rooms = 0;
 let choices = [];
 let nameplayer1 ="";
 
-//db conneciton
+//db connection
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
       socket.broadcast.to(data.room).emit('game start',{name:data.name});
       socket.emit('nameplayer1',{name:nameplayer1});
     } else {
-      socket.emit('fullroom', { message: 'Sorry, The room is full!' });
+      socket.emit('fullroom', { message: 'Desolé, la salle est pleine !' });
     }
   });
 
@@ -116,7 +116,6 @@ io.on('connection', (socket) => {
           case 'reload':
           socket.broadcast.to(data.room).emit('tie', choices);
           socket.emit('tie', choices);
-          // socket.to(data.room).emit('tie', choices);
           break;
 
           case 'hedge':
