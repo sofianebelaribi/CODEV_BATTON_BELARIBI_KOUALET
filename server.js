@@ -13,7 +13,7 @@ let rooms = 0;
 let choices = [];
 let nameplayer1 ="";
 
-console.log(${process.env.MYSQL_ADDON_DB})
+console.log(process.env.MYSQL_ADDON_DB)
 //db connection
 const connection = mysql.createConnection({
   host: '${process.env.MYSQL_ADDON_HOST || localhost}',
