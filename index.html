@@ -32,35 +32,35 @@
 
 
     <div class="row rules">
-      <h3 class="col-md-12 col-sm-12">How to play</h3>
+      <h3 class="col-md-12 col-sm-12">Comment jouer ?</h3>
       <p class="col-md-12 col-sm-12 margin-0">Le joueur se connecte soit en choississant un nom public soit avec son compte</p>
-      <p class="col-md-12 col-sm-12 margin-0">Il peut ensuite soit crée une room soit en rejoindre une </p>
+      <p class="col-md-12 col-sm-12 margin-0">Il peut ensuite soit créer une room soit en rejoindre une </p>
       <p class="col-md-12 col-sm-12">La partie commence lorsque 2 joueurs se trouvent dans la même room </p>
     </div>
     <!--STEP 1-->
     <div id="step1">
-      <h1 class="title">Choose a username</h1>
+      <h1 class="title">Choisir un username</h1>
       <hr>
       <div id="newName" class="row">
-        <input class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" type="text" name="name" id="nickname" placeholder="Enter your name" required>
-        <button class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" type="button"  id="next">New Game</button>
+        <input class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" type="text" name="name" id="nickname" placeholder="Saisir un username" required>
+        <button class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" type="button"  id="next">Créer une partie</button>
       </div>
 
 
       <form id="userFormBd">
-        <h1 class="title">Sign in</h1>
+        <h1 class="title">Se connecter</h1>
         <hr>
         <div class="row">
-          <input class="offset-md-2 col-md-3 col-sm-6 input-form col-sm-8 col-8 offset-2" type="text" id="usernameBd" placeholder="Enter Username"/>
-          <input class="col-md-3 offset-md-2 col-sm-6 input-form col-sm-8 col-8 offset-2" type="password" id="passwordBd" placeholder="Enter password"/>
+          <input class="offset-md-2 col-md-3 col-sm-6 input-form col-sm-8 col-8 offset-2" type="text" id="usernameBd" placeholder="Username"/>
+          <input class="col-md-3 offset-md-2 col-sm-6 input-form col-sm-8 col-8 offset-2" type="password" id="passwordBd" placeholder="Mot de passe"/>
         </div>
         <div class="row">
-          <button class="btn btn-primary col-md-3 col-sm-8 col-8 offset-2 btn-home" id="loginBd">Login</button>
+          <button class="btn btn-primary col-md-3 col-sm-8 col-8 offset-2 btn-home" id="loginBd">Connexion</button>
         </div>
 
       </form>
       <div class="row">
-        <button type="button" class="btn col-md-3 col-sm-8 col-8 offset-2 btn-primary btn-home" id="signUp">Sign Up</button>
+        <button type="button" class="btn col-md-3 col-sm-8 col-8 offset-2 btn-primary btn-home" id="signUp">S'inscrire</button>
       </div>
 
     </div>
@@ -69,18 +69,18 @@
     <!--STEP 2-->
     <div id="step2" style="display: none;">
       <div id="newGame">
-        <h1 class="title">Create a new Game</h1>
+        <h1 class="title">Créer une nouvelle partie</h1>
         <hr>
         <div class="row">
-          <button class="btn btn-primary btn-home col-md-3 col-sm-8 col-8 offset-2 "  id="new">New Game</button>
+          <button class="btn btn-primary btn-home col-md-3 col-sm-8 col-8 offset-2 "  id="new">Lancer la partie</button>
         </div>
       </div>
       <div id="joinGame">
-        <h1 class="title">Join an existing game</h1>
+        <h1 class="title">Rejoindre une room</h1>
         <hr>
         <div class="row">
-          <input type="text" name="room" id="room" placeholder="Enter Game ID" class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" required>
-          <button type="button" class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" id="join">Join Game</button>
+          <input type="text" name="room" id="room" placeholder="Game ID" class="offset-md-2 col-md-3 col-sm-8 col-8 offset-2 input-form" required>
+          <button type="button" class="col-md-2 offset-md-2 col-sm-8 col-8 offset-2 btn btn-primary btn-home" id="join">Rejoindre</button>
         </div>
       </div>
     </div>
@@ -91,29 +91,29 @@
     <div class="row div-logo">
       <img src="007.png" class="logo" alt="">
     </div>
-    <h1 class="title">Sign up</h1>
+    <h1 class="title">Inscription</h1>
     <hr>
     <div class="form-group form-username row">
 
       <div class="col-sm-10 offset-md-1">
-        <input class="form-control" id="usernameSu" placeholder="Enter username" required/>
+        <input class="form-control" id="usernameSu" placeholder="username" required/>
       </div>
     </div>
     <div class="form-group form-username row">
       <div class="col-sm-10 offset-md-1">
-        <input class="form-control" id="userPasswordSu" placeholder="Enter password" required/>
+        <input class="form-control" id="userPasswordSu" placeholder="Mot de passe" required/>
       </div>
     </div>
     <div class="form-group form-username row">
       <div class="col-sm-4 offset-md-1">
-        <input class="form-control" id="userFirstnameSu" placeholder="Enter your firstname" required/>
+        <input class="form-control" id="userFirstnameSu" placeholder="Prénom" required/>
       </div>
       <div class="col-sm-4 offset-md-2">
-        <input class="form-control" id="userLastnameSu" placeholder="Enter your name" required/>
+        <input class="form-control" id="userLastnameSu" placeholder="Nom" required/>
       </div>
     </div>
     <div class="login">
-      <input class="btn btn-primary btn-sign-up btn-home col-md-3 col-sm-8 col-8 offset-2" type="submit" value="Sign Up" />
+      <input class="btn btn-primary btn-sign-up btn-home col-md-3 col-sm-8 col-8 offset-2" type="submit" value="S'inscrire" />
     </div>
   </form>
 
@@ -149,7 +149,7 @@
             <p>Avant de pouvoir tirer il faut s'assurer d'avoir des balles dans le chargeur</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-home btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-home btn-secondary" data-dismiss="modal">Fermer</button>
           </div>
         </div>
       </div>
@@ -167,18 +167,18 @@
       </div>
       <div class="col-md-4">
         <div class="row">
-          <p>Nombre de balles dans le chargeur :</p>
-          <div id="bullets-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          <p class="element">Nombre de balles dans le chargeur :</p>
+          <div class="center-text" id="bullets-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
           </div>
         </div>
-        <div class="row">
-          <p>Ma vie <span id="player1"></span> :</p>
-          <div id="live-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
+        <div class="row margin-bottom center-text">
+          <p class="element">Ma vie <span id="player1"></span> :</p>
+          <div class="center-text" id="live-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
           </div>
         </div>
-        <div class="row">
-          <p>Nombre de vie restante de l'adversaire<span id="player2"></span> :</p>
-          <div id="live-2" onchange="displayImg($(this).val(), $(this).attr('id'))">
+        <div class="row center-text ">
+          <p class="element">Nombre de vie restante de l'adversaire<span id="player2"></span> :</p>
+          <div class="center-text" id="live-2" onchange="displayImg($(this).val(), $(this).attr('id'))">
           </div>
         </div>
         <div class="row sectionArea">
@@ -194,9 +194,9 @@
 
     <div class="row">
       <div class="choice-div">
-        <button class="btn choice-button btn-primary btn-home" id="hedge" value="hedge">Hedge</button>
-        <button class="btn choice-button btn-primary btn-home" id="reload" value="reload">Reload</button>
-        <button class="btn choice-button btn-primary btn-home" id="shoot" value="shoot">Shoot</button>
+        <button class="btn choice-button btn-primary btn-home" id="hedge" value="hedge">Se protéger</button>
+        <button class="btn choice-button btn-primary btn-home" id="reload" value="reload">Recharger</button>
+        <button class="btn choice-button btn-primary btn-home" id="shoot" value="shoot">Tirer</button>
       </div>
     </div>
   </div>
