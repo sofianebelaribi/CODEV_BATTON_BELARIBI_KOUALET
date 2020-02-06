@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars,no-restricted-globals */
-require('dotenv').config({ path: require('find-config')('.env') })
 (function init() {
     // init vars
     const $game = $('#game');
