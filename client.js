@@ -22,7 +22,7 @@
     let game;
 
 
-    const socket = io.connect('codev-007.cleverapps.io:8080');
+    const socket = io.connect('https://codev-007.cleverapps.io:8080');
 
     //Init hearts & bullets icons
     function displayImg(val, id) {
