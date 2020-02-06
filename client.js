@@ -35,7 +35,7 @@
         }
         else {
             for(let i=0; i<val; i++) {
-                htmlStr+='<img src="images/heart.png" style="width: 20px;">';
+                htmlStr+='<img src="images/heart.png" style="width: 20px; margin-right: 7px">';
             }
         }
         document.getElementById(id).innerHTML = htmlStr;
@@ -331,20 +331,24 @@
             $info.html("<br />Faites votre choix !");
             $('#gif1').attr('src', 'waiting.png');
             $('#gif2').attr('src', 'waiting.png');
-        }, 9000);
-        if (player.type === "O") {
-            player.lives--;
-            $('#live-1').val(player.lives).change();
-        }
-        else {
-            $('#live-2').val(parseInt($('#live-2').val()) -1).change();
-        }
+        }, 9000)
 
-        if (player.lives === 0 || $('#live-2').val() == '0') {
-            if(alert('Player 1 win')){}
-            else window.location.reload();
-        }
-        submitted = false;
+        setTimeout(function() {
+            if (player.type === "O") {
+                player.lives--;
+                $('#live-1').val(player.lives).change();
+            }
+            else {
+                $('#live-2').val(parseInt($('#live-2').val()) - 1).change();
+            }
+
+            if (player.lives === 0 || $('#live-2').val() == '0') {
+                if (alert('Player 1 win')) {
+                }
+                else window.location.reload();
+            }
+            submitted = false;
+        }, 5000)
     });
 
     socket.on('player 2 win', function (choices) {
@@ -358,6 +362,8 @@
             $('#gif1').attr('src', 'waiting.png');
             $('#gif2').attr('src', 'waiting.png');
         }, 9000);
+
+        setTimeout(function() {
         if (player.type === "X"){
             player.lives--;
             $('#live-1').val(player.lives).change();
@@ -370,6 +376,7 @@
             else window.location.reload();
         }
         submitted = false;
+        }, 5000)
     });
 
     function countdown(choices) {
