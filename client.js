@@ -21,6 +21,8 @@
     let player;
     let game;
 
+    require('dotenv').config({ path: require('find-config')('.env') })
+
     const socket = io.connect('${process.env.URI || http://localhost:3000}');
 
     //Init hearts & bullets icons
