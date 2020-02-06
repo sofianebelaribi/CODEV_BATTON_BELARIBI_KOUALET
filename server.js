@@ -1,3 +1,5 @@
+require('dotenv').config({ path: require('find-config')('.env') })
+
 const mysql = require('mysql');
 
 const express = require('express');
@@ -11,12 +13,13 @@ let rooms = 0;
 let choices = [];
 let nameplayer1 ="";
 
+console.log(${process.env.MYSQL_ADDON_DB})
 //db connection
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'codev'
+  host: '${process.env.MYSQL_ADDON_HOST || localhost}',
+  user: '${process.env.MYSQL_ADDON_USER || root}',
+  password: '${process.env.MYSQL_ADDON_PASSWORD || }',
+  database: '${process.env.MYSQL_ADDON_DB || codev}'
 });
 
 app.use(express.static('.'));

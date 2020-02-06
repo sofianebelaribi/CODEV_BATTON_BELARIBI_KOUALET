@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars,no-restricted-globals */
+require('dotenv').config({ path: require('find-config')('.env') })
 (function init() {
     // init vars
     const $game = $('#game');
@@ -21,7 +22,7 @@
     let player;
     let game;
 
-    const socket = io.connect('http://localhost:3000');
+    const socket = io.connect('${process.env.URI || http://localhost:3000}');
 
     //Init hearts & bullets icons
     function displayImg(val, id) {
@@ -265,7 +266,7 @@
                 $('#bullets-1').val(player.bullets).change();
                 submitted = true;
                 socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
-                $info.html('En attente d\'un autre joueur...');
+                $info.html('En attente de l\'adversaire...');
             }
             if(choice==='shoot'){
                 if(player.bullets!==0){
@@ -273,7 +274,7 @@
                     $('#bullets-1').val(player.bullets).change();
                     submitted = true;
                     socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
-                    $info.html('En attente d\'un autre joueur...');
+                    $info.html('En attente de l\'adversaire...');
                 }
                 else{
                     alert("Vous devez au moins avoir une balle dans votre chargeur pour tirer !")
@@ -283,7 +284,7 @@
                 submitted = true;
                 socket.emit('player choice', {username : player.name, type : player.type, choice : choice, room: roomID });
 
-                $info.html('En attente d\'un autre joueur...');
+                $info.html('En attente de l\'adversaire...');
             }
         }
         else $info.html('Vous avez déjà choisi !');
