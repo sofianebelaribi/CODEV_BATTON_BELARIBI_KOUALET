@@ -21,7 +21,6 @@
     let player;
     let game;
 
-    // const socket = io.connect('http://tic-tac-toe-realtime.herokuapp.com'),
     const socket = io.connect('http://localhost:3000');
 
     //Init hearts & bullets icons
@@ -47,6 +46,22 @@
     $('.logo').click(function() {
         location.reload();
     });
+
+    function translateChoice(choice) {
+        switch (choice) {
+            case 'hedge':
+                return "protection"
+                break;
+            case 'shoot':
+                return "tir"
+                break;
+            case 'reload':
+                return "rechargement"
+                break;
+            default:
+                return ""
+        }
+    }
 
 
     class Player {
@@ -83,7 +98,7 @@
     $('#next').on('click', () => {
         const name = $('#nickname').val();
         if (!name) {
-            alert('Please enter your name.');
+            alert('Entrez votre nom.');
             return;
         }
         $('#step1').css('display', 'none');
@@ -100,7 +115,7 @@
     //if connected go to next step
     socket.on('result', (data) => {
         if (Array.from(data.res).length === 0) {
-            alert("password or username wrong")
+            alert("mot de passe ou identifiant erroné")
         }
         else{
             $("#nickname").val(data.username);
@@ -132,7 +147,7 @@
     //check signup if ok go to menu
     socket.on('checkSignUp', (data) => {
         if (Array.from(data.res).length === null) {
-            alert("signup went wrong !")
+            alert("L'inscription a mal tourné !")
         }
         else{
             $('#formSignUp').css('display', 'none');
@@ -145,7 +160,7 @@
     $('#new').on('click', () => {
         const name = $('#nickname').val();
         if (!name) {
-            alert('Please enter your name.');
+            alert('Entrez votre nom.');
             return;
         }
         socket.emit('createGame', { name });
@@ -157,7 +172,7 @@
         const name = $('#nickname').val();
         const roomID = $('#room').val();
         if (!name || !roomID) {
-            alert('Please enter a correct game ID.');
+            alert('Entrez un ID correct.');
             return;
         }
         socket.emit('joinGame', { name, room: roomID });
@@ -194,7 +209,7 @@
 
         const message = [data.name,data.room];
         $('#p2').html(message[0]);
-        $info.html('Make your choice.');
+        $info.html('Faites votre choix !');
         // Create game for player 2
         game = new Game(data.room);
         game.displayBoard(message);
@@ -208,7 +223,7 @@
     });
 
     socket.on('fullroom', (data) => {
-        alert("Cet Id de room n'est pas disponible ou la room est pleine.");
+        alert("Cet ID de room n'est pas disponible ou la room est pleine.");
     });
 
     socket.on('nameplayer1', (data) => {
@@ -249,9 +264,8 @@
                 player.bullets ++;
                 $('#bullets-1').val(player.bullets).change();
                 submitted = true;
-
                 socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
-                $info.html('Waiting for other player...');
+                $info.html('En attente d\'un autre joueur...');
             }
             if(choice==='shoot'){
                 if(player.bullets!==0){
@@ -259,45 +273,45 @@
                     $('#bullets-1').val(player.bullets).change();
                     submitted = true;
                     socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
-                    $info.html('Waiting for other player...');
+                    $info.html('En attente d\'un autre joueur...');
                 }
                 else{
-                    alert("You must have at least one bullet in the clip to fire!")
+                    alert("Vous devez au moins avoir une balle dans votre chargeur pour tirer !")
                 }
             }
             if(choice==="hedge"){
                 submitted = true;
                 socket.emit('player choice', {username : player.name, type : player.type, choice : choice, room: roomID });
 
-                $info.html('Waiting for other player...');
+                $info.html('En attente d\'un autre joueur...');
             }
         }
-        else $info.html('You have already made a choice!');
+        else $info.html('Vous avez déjà choisi !');
     });
 
     socket.on('disconnected', function (username) {
-        $info.append('<br />' + username + ' left the room.');
+        $info.append('<br />' + username + ' à quitté la salle.');
     });
 
     socket.on('connected', function (username) {
-        $info.append('<br />' + username + ' joined the room.');
+        $info.append('<br />' + username + ' à rejoint la salle.');
     });
 
     socket.on('game start', function(data) {
         //  $game.show();
         $('#p2').html(data.name);
-        $info.append('<br />Make your choice.');
+        $info.html('<br/>Faites votre choix');
     });
 
 
     socket.on('tie', function (choices) {
         countdown(choices);
         setTimeout(function() {
-            $info.append("<br />Everybody's still alive !");
+            $info.append("<br/>Tout le monde est sain et sauf !");
         }, 7000);
 
         setTimeout(function() {
-            $info.html("<br />Make your choice");
+            $info.html("<br/>Faites votre choix !");
             $('#gif1').attr('src', 'waiting.png');
             $('#gif2').attr('src', 'waiting.png');
         }, 9000);
@@ -309,10 +323,10 @@
         countdown(choices);
 
         setTimeout(function () {
-            $info.append('<br />' + choices[0]['user'] + ' wins!');
+            $info.append('<br />' + choices[0]['user'] + ' gagne !');
         }, 5000);
         setTimeout(function() {
-            $info.html("<br />Make your choice");
+            $info.html("<br />Faites votre choix !");
             $('#gif1').attr('src', 'waiting.png');
             $('#gif2').attr('src', 'waiting.png');
         }, 9000);
@@ -335,10 +349,10 @@
         countdown(choices);
 
         setTimeout(function () {
-            $info.append('<br />' + choices[1]['user'] + ' wins!');
+            $info.append('<br />' + choices[1]['user'] + ' gagne !');
         }, 5000);
         setTimeout(function() {
-            $info.html("<br />Make your choice");
+            $info.html("<br />Faites votre choix !");
             $('#gif1').attr('src', 'waiting.png');
             $('#gif2').attr('src', 'waiting.png');
         }, 9000);
@@ -378,7 +392,7 @@
             $info.css({
                 'font-size' : '2em', // couleur rouge
             });
-            $info.html(choices[0]['user'] + ' picked ' + choices[0]['choice'] + '.');
+            $info.html(choices[0]['user'] + ' a choisi ' + translateChoice(choices[0]['choice']) + '.');
             if(choices[0]['choice']==="hedge"){
                 $('#gif1').attr('src', 'images/007_shield.gif').attr('style','transform: scaleX(-1);');
             }
@@ -400,7 +414,7 @@
             if(choices[1]['choice']==="shoot"){
                 $('#gif2').attr('src', 'images/007_shoot.gif');
             }
-            $info.append('<br />' + choices[1]['user'] + ' picked ' + choices[1]['choice'] + '.');
+            $info.append('<br />' + choices[1]['user'] + ' a choisi ' + translateChoice(choices[1]['choice']) + '.');
         }, 5000);
     }
 }());
