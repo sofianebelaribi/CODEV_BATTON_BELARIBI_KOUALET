@@ -32,8 +32,6 @@ io.on('connection', (socket) => {
 
   //signin
   socket.on('find', function(data) {
-      console.log(data.username);console.log(data.password);
-
       connection.query("SELECT user_name FROM users WHERE user_name = '" + data.username + "'" + "AND password = '" + data.password + "'"  , (err, res) => {
       socket.emit('result', { res: res, username : data.username})
     });
