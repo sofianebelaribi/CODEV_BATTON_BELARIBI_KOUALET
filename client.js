@@ -28,9 +28,9 @@
     //Init hearts & bullets icons
     function displayImg(val, id) {
         let htmlStr="";
-        if(id == "bullets-1"){
+        if(id === "bullets-1"){
             for(let i=0; i<val; i++) {
-                htmlStr+='<img src="images/bullet.png" style="width: 20px;  transform:rotate(90deg);">';
+                htmlStr+='<img src="images/bullet.png" style="width: 50px; margin-right: -15px; margin-bottom: 20px; transform:rotate(-90deg);">';
             }
         }
         else {
