@@ -78,6 +78,10 @@
     color: #a1967d
 }
 
+#signUp {
+    margin-bottom: 35px;
+}
+
 #signUp:hover {
     background-color: white !important;
     color: #a1967d
@@ -214,6 +218,10 @@ hr{
 .choice-div{
   margin-bottom: 45px;
   margin-top: 35px;
+}
+
+.choice-button{
+  margin-right: 0px !important;
 }
 
 
