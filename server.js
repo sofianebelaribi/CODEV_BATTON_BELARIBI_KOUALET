@@ -15,10 +15,11 @@ let nameplayer1 ="";
 
 //db connection
 const connection = mysql.createConnection({
-  host: '${process.env.MYSQL_ADDON_HOST || localhost}',
-  user: '${process.env.MYSQL_ADDON_USER || root}',
-  password: '${process.env.MYSQL_ADDON_PASSWORD || }',
-  database: '${process.env.MYSQL_ADDON_DB || codev}'
+  host: process.env.MYSQL_ADDON_HOST,
+  user: process.env.MYSQL_ADDON_USER,
+  password: process.env.MYSQL_ADDON_PASSWORD,
+  database: process.env.MYSQL_ADDON_DB,
+  port: process.env.MYSQL_ADDON_PORT
 });
 
 app.use(express.static('.'));
@@ -31,7 +32,9 @@ io.on('connection', (socket) => {
 
   //signin
   socket.on('find', function(data) {
-    connection.query("SELECT user_name FROM users WHERE user_name = '" + data.username + "'" + "AND password = '" + data.password + "'"  , (err, res) => {
+      console.log(data.username);console.log(data.password);
+
+      connection.query("SELECT user_name FROM users WHERE user_name = '" + data.username + "'" + "AND password = '" + data.password + "'"  , (err, res) => {
       socket.emit('result', { res: res, username : data.username})
     });
   });
@@ -162,4 +165,4 @@ io.on('connection', (socket) => {
 
 });
 
-server.listen(8080);
+server.listen(process.env.PORT || 3000);
