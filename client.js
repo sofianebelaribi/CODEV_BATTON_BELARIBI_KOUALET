@@ -13,9 +13,9 @@
     let lives = 3;
     let bullets = 3;
     // initialize infos
-    $('#bullets').text(bullets);
-    $('#live-1').text(lives);
-    $('#live-2').text(lives);
+    $('#bullets').val(bullets);
+    $('#live-1').val(lives);
+    $('#live-2').val(lives);
 
     const P1 = 'X';
     const P2 = 'O';
@@ -215,7 +215,7 @@
 
             if(choice == 'reload'){
                 player.bullets ++;
-                $('#bullets').text(player.bullets);
+                $('#bullets').val(player.bullets).change();
                 submitted = true;
 
                 socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
@@ -224,7 +224,7 @@
             if(choice=='shoot'){
                 if(player.bullets!=0){
                     player.bullets --;
-                    $('#bullets').text(player.bullets);
+                    $('#bullets').val(player.bullets).change();
                     submitted = true;
                     socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
                     $info.html('Waiting for other player...');
@@ -279,13 +279,14 @@
         if (player.type === "O") {
             console.log("player.type is O");
             player.lives--;
-            $('#live-1').text(player.lives);
+            $('#live-1').val(player.lives).change();
         }
         else {
-            $('#live-2').text(parseInt($('#live-2').text()) -1);
+            $('#live-2').val(parseInt($('#live-2').val()) -1).change();
         }
 
-        if (player.lives === 0 || $('#live-2').text() == '0') {
+        //TODO : change to if live-2 {...} .val
+        if (player.lives === 0 || $('#live-2').val() == '0') {
             if(alert('Player 1 win')){}
             else window.location.reload();
         }
@@ -304,12 +305,16 @@
         if (player.type === "X"){
             console.log("player.type is X");
             player.lives--;
-            $('#live-1').text(player.lives);
+            $('#live-1').val(player.lives).change();
         }
         else {
-            $('#live-2').text(parseInt($('#live-2').text()) -1);
+
+            $('#live-2').val(parseInt($('#live-2').val()) -1).change();
         }
-        if (player.lives === 0 || $('#live-2').text() == '0') {
+
+        //TODO : change to if live-2 {...} .val
+        //TODO : change live-2 to live-1 ?
+        if (player.lives === 0 || $('#live-2').val() == '0') {
             if(alert('Player 2 win')){}
             else window.location.reload();
         }

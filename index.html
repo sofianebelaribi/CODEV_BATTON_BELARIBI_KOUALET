@@ -2,11 +2,30 @@
 <html>
 <head>
   <title>007</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
   <!-- <link rel="stylesheet" href="node_modules/skeleton-css/css/skeleton.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<script type="text/javascript">
+    function displayImg(val, id) {
+        var htmlStr="";
+        console.log("displayImg");
+        console.log(val);
+        if(id == "bullets"){
+            for(let i=0; i<val; i++) {
+                htmlStr+='<img src="images/bullet.png" style="width: 20px;  transform:rotate(90deg);">';
+            }
+        }
+        else {
+            for(let i=0; i<val; i++) {
+                htmlStr+='<img src="images/heart.png" style="width: 20px;">';
+            }
+        }
+        document.getElementById(id).innerHTML = htmlStr;
+    }
+</script>
+
 <div class="container">
   <div id="roomID" style="display: none;"></div>
   <div class="menu">
@@ -134,15 +153,28 @@
     <div class="col-md-2">
       <div class="row">
         <p>Nombre de balles dans le chargeur :</p>
-        <p id="bullets"></p>
+        <div id="bullets" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
+          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
+          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
+        </div>
       </div>
       <div class="row">
         <p>Ma vie <span id="player1"></span> :</p>
-        <p id="live-1"></p>
+        <div id="live-1" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          <img src="images/heart.png" style="width: 20px;">
+          <img src="images/heart.png" style="width: 20px;">
+          <img src="images/heart.png" style="width: 20px;">
+        </div>
+
       </div>
       <div class="row">
-        <p>Nombre de vie restante de l'adversaire<span id="player2"></span> :</p>
-        <div id="live-2"></div>
+        <p>Nombre de vie restante de l'adversaire <span id="player2"></span> :</p>
+        <div id="live-2" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          <img src="images/heart.png" style="width: 20px;">
+          <img src="images/heart.png" style="width: 20px;">
+          <img src="images/heart.png" style="width: 20px;">
+        </div>
       </div>
     </div>
 
@@ -155,5 +187,7 @@
 <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
+
+
 </body>
 </html>
