@@ -200,3 +200,22 @@ hr{
   width: 100%;
   text-align: center;
 }
+
+
+@media (max-width: 700.98px) {
+
+.gif{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.choice-div{
+  margin-bottom: 45px;
+  margin-top: 35px;
+}
+
+
+
+ }
