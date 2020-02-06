@@ -21,9 +21,9 @@
     let player;
     let game;
 
-    require('dotenv').config({ path: require('find-config')('.env') })
 
-    const socket = io.connect('${process.env.URI || http://localhost:3000}');
+    // const socket = io.connect('https://codev-007.cleverapps.io:8080');
+    const socket = io();
 
     //Init hearts & bullets icons
     function displayImg(val, id) {
