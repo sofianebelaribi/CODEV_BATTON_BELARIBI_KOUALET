@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars,no-restricted-globals */
 (function init() {
-    // test
-    const $users = $('#users');
-    const $username = $('#username');
+    // init vars
     const $game = $('#game');
     const $info = $('#info');
     let userFormBd=$('#userFormBd');
@@ -11,9 +9,10 @@
     let formSignUp=$("#formSignUp");
     let submitted = false;
     let lives = 3;
-    let bullets = 3;
+    let bullets = 0;
+
     // initialize infos
-    $('#bullets').val(bullets);
+    $('#bullets-1').val(bullets);
     $('#live-1').val(lives);
     $('#live-2').val(lives);
 
@@ -24,6 +23,25 @@
 
     // const socket = io.connect('http://tic-tac-toe-realtime.herokuapp.com'),
     const socket = io.connect('http://localhost:3000');
+
+    //Init hearts & bullets icons
+    function displayImg(val, id) {
+        let htmlStr="";
+        if(id == "bullets-1"){
+            for(let i=0; i<val; i++) {
+                htmlStr+='<img src="images/bullet.png" style="width: 20px;  transform:rotate(90deg);">';
+            }
+        }
+        else {
+            for(let i=0; i<val; i++) {
+                htmlStr+='<img src="images/heart.png" style="width: 20px;">';
+            }
+        }
+        document.getElementById(id).innerHTML = htmlStr;
+    }
+    displayImg($('#bullets-1').val(),$('#bullets-1').attr('id'))
+    displayImg($('#live-1').val(),$('#live-1').attr('id'))
+    displayImg($('#live-2').val(),$('#live-2').attr('id'))
 
     $('.logo').css('cursor', 'pointer')
     $('.logo').click(function() {
@@ -38,10 +56,6 @@
             this.lives = lives;
             this.bullets = bullets;
         }
-
-        getPlayerName() {
-            return this.name;
-        }
     }
 
     // roomId Id of the room in which the game is running on the server.
@@ -54,7 +68,8 @@
         displayBoard(message) {
             $('.menu').css('display', 'none');
             $('#gameArea').css('display', 'block');
-            $('#userHello').html(message);
+
+            $('#roomHello').html('ID : '+ message[1]);
             $('#roomID').val(this.getRoomId());
         }
 
@@ -122,12 +137,8 @@
         else{
             $('#formSignUp').css('display', 'none');
             $('.menu').show();
-            // $('#step1').css('display', 'none');
-            // $('#step2').css('display', 'block');
         }
     });
-
-
 
     // --------STEP 2----------//
     // Create a new game. Emit newGame event.
@@ -155,12 +166,11 @@
 
     // New Game created by current client. Update the UI and create new Game var.
     socket.on('newGame', (data) => {
-        const message =
-            `Hello, ${data.name}. Please ask your friend to enter Game ID:
-      ${data.room}. Waiting for player 2...`;
+        const message =[data.name,data.room];
 
         // Create game for player 1
         game = new Game(data.room);
+        $('#p1').html(message[0]);
         game.displayBoard(message);
     });
 
@@ -170,9 +180,10 @@
      // eslint-disable-next-line no-unused-vars
      */
     socket.on('player1', (data) => {
-        console.log(data);
-        const message = `Hello, ${player.getPlayerName()}`;
-        $('#userHello').html(message);
+        const message = [data.name,data.room];
+
+        $('#p1').html(message[0]);
+
     });
 
     /**
@@ -180,51 +191,72 @@
      * This event is received when P2 successfully joins the game room.
      */
     socket.on('player2', (data) => {
-        console.log(data);
 
-        const message = `Hello, ${data.name}`;
-
+        const message = [data.name,data.room];
+        $('#p2').html(message[0]);
+        $info.html('Make your choice.');
         // Create game for player 2
         game = new Game(data.room);
         game.displayBoard(message);
     });
 
-    // /**
-    //  * End the game on any err event.
-    //  */
-    // socket.on('err', (data) => {
-    //   game.endGame(data.message);
-    // });
+    /**
+     * End the game on any err event.
+     */
+    socket.on('err', (data) => {
+        game.endGame(data.message);
+    });
+
+    socket.on('fullroom', (data) => {
+        alert("Cet Id de room n'est pas disponible ou la room est pleine.");
+    });
+
+    socket.on('nameplayer1', (data) => {
+        $('#p1').html(data.name);
+    });
 
 
+    $value="";
     socket.on('result', function(data) {
         $('#alert').show();
     });
 
+
+    $('#hedge').click(function(e){
+        $value = $('#hedge').val();
+        $('#submit').trigger('click'); // équivalent de  $('#lien1').click();
+    });
+
+    $('#reload').click(function(e){
+        $value = $('#reload').val();
+        $('#submit').trigger('click');
+        //  $('#submit').trigger('click'); // équivalent de  $('#lien1').click();
+    });
+
+    $('#shoot').click(function(e){
+        $value = $('#shoot').val();
+        $('#submit').trigger('click'); // équivalent de  $('#lien1').click();
+    });
+
+
     $game.submit(function(e) {
         e.preventDefault();
-        var choice = $('input[name=choice]:checked').val();
-        console.log(choice);
-        console.log(player);
-        console.log(player.name);
-        console.log(player.lives);
-        console.log(player.bullets);
-        console.log($('#roomID').val());
+        let choice = $value;
         const roomID = $('#roomID').val();
         if(!submitted) {
 
-            if(choice == 'reload'){
+            if(choice === 'reload'){
                 player.bullets ++;
-                $('#bullets').val(player.bullets).change();
+                $('#bullets-1').val(player.bullets).change();
                 submitted = true;
 
                 socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
                 $info.html('Waiting for other player...');
             }
-            if(choice=='shoot'){
-                if(player.bullets!=0){
+            if(choice==='shoot'){
+                if(player.bullets!==0){
                     player.bullets --;
-                    $('#bullets').val(player.bullets).change();
+                    $('#bullets-1').val(player.bullets).change();
                     submitted = true;
                     socket.emit('player choice',{username : player.name, type : player.type, choice : choice, room: roomID });
                     $info.html('Waiting for other player...');
@@ -233,7 +265,7 @@
                     alert("You must have at least one bullet in the clip to fire!")
                 }
             }
-            if(choice=="hedge"){
+            if(choice==="hedge"){
                 submitted = true;
                 socket.emit('player choice', {username : player.name, type : player.type, choice : choice, room: roomID });
 
@@ -251,33 +283,40 @@
         $info.append('<br />' + username + ' joined the room.');
     });
 
-    socket.on('game start', function() {
-        $game.show();
+    socket.on('game start', function(data) {
+        //  $game.show();
+        $('#p2').html(data.name);
         $info.append('<br />Make your choice.');
     });
 
+
     socket.on('tie', function (choices) {
-        console.log("this is a tie");
         countdown(choices);
         setTimeout(function() {
             $info.append("<br />Everybody's still alive !");
-        }, 3000);
+        }, 7000);
+
+        setTimeout(function() {
+            $info.html("<br />Make your choice");
+            $('#gif1').attr('src', 'waiting.png');
+            $('#gif2').attr('src', 'waiting.png');
+        }, 9000);
 
         submitted = false;
     });
 
     socket.on('player 1 win', function (choices) {
-        console.log("player 1 win");
-        console.log(player);
-
         countdown(choices);
 
         setTimeout(function () {
             $info.append('<br />' + choices[0]['user'] + ' wins!');
-        }, 3000);
-        console.log(player.type);
+        }, 5000);
+        setTimeout(function() {
+            $info.html("<br />Make your choice");
+            $('#gif1').attr('src', 'waiting.png');
+            $('#gif2').attr('src', 'waiting.png');
+        }, 9000);
         if (player.type === "O") {
-            console.log("player.type is O");
             player.lives--;
             $('#live-1').val(player.lives).change();
         }
@@ -285,7 +324,6 @@
             $('#live-2').val(parseInt($('#live-2').val()) -1).change();
         }
 
-        //TODO : change to if live-2 {...} .val
         if (player.lives === 0 || $('#live-2').val() == '0') {
             if(alert('Player 1 win')){}
             else window.location.reload();
@@ -294,26 +332,23 @@
     });
 
     socket.on('player 2 win', function (choices) {
-        console.log("player 2 win");
-        console.log(player);
         countdown(choices);
 
         setTimeout(function () {
             $info.append('<br />' + choices[1]['user'] + ' wins!');
-        }, 3000);
-        console.log(player.type);
+        }, 5000);
+        setTimeout(function() {
+            $info.html("<br />Make your choice");
+            $('#gif1').attr('src', 'waiting.png');
+            $('#gif2').attr('src', 'waiting.png');
+        }, 9000);
         if (player.type === "X"){
-            console.log("player.type is X");
             player.lives--;
             $('#live-1').val(player.lives).change();
         }
         else {
-
             $('#live-2').val(parseInt($('#live-2').val()) -1).change();
         }
-
-        //TODO : change to if live-2 {...} .val
-        //TODO : change live-2 to live-1 ?
         if (player.lives === 0 || $('#live-2').val() == '0') {
             if(alert('Player 2 win')){}
             else window.location.reload();
@@ -323,6 +358,13 @@
 
     function countdown(choices) {
         setTimeout(function() {
+            $info.css({
+                'font-size' : '5em',
+                'text-align': 'center',
+                'margin-right' : 'auto',
+                'margin-left' : 'auto',
+            });
+
             $info.html('3...');
         }, 0);
         setTimeout(function() {
@@ -330,13 +372,35 @@
         }, 1000);
         setTimeout(function() {
             $info.html('1...');
+
         }, 2000);
         setTimeout(function() {
+            $info.css({
+                'font-size' : '2em', // couleur rouge
+            });
             $info.html(choices[0]['user'] + ' picked ' + choices[0]['choice'] + '.');
+            if(choices[0]['choice']==="hedge"){
+                $('#gif1').attr('src', 'images/007_shield.gif').attr('style','transform: scaleX(-1);');
+            }
+            if(choices[0]['choice']==="reload"){
+                $('#gif1').attr('src', 'images/007_reload.gif').attr('style','transform: scaleX(-1);');
+            }
+            if(choices[0]['choice']==="shoot"){
+                $('#gif1').attr('src', 'images/007_shoot.gif').attr('style','transform: scaleX(-1);');
+            }
+
         }, 3000);
         setTimeout(function() {
+            if(choices[1]['choice']==="hedge"){
+                $('#gif2').attr('src', 'images/007_shield.gif');
+            }
+            if(choices[1]['choice']==="reload"){
+                $('#gif2').attr('src', 'images/007_reload.gif');
+            }
+            if(choices[1]['choice']==="shoot"){
+                $('#gif2').attr('src', 'images/007_shoot.gif');
+            }
             $info.append('<br />' + choices[1]['user'] + ' picked ' + choices[1]['choice'] + '.');
-        }, 4000);
+        }, 5000);
     }
-
 }());

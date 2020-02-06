@@ -124,5 +124,64 @@ hr{
     border-radius:25px !important;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
 
+
+
+.uppercase, .title {
+  margin-top: 45px;
+}
+
+#userHello{
+  text-align: center;
+}
+
+.gif{
+  width: 100%;
+}
+
+.sectionArea{
+  margin-top: 25px;
+}
+
+#info{
+  text-align: center;
+  font-size: 2em;
+  color: #a1967d !important
+}
+
+#p1, #p2 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.choice-button{
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-right: 25px;
+  padding-left: 25px;
+  border-radius: 55px !important;
+  margin-right: 25px;
+}
+
+.choice-button:hover{
+  background-color: white !important;
+  color:  #a1967d;
+}
+
+.choice-div{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-rules {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white !important;
+  color: #a1967d;
+  margin-bottom: 25px;
+}
+
+.btn-rules:hover{
+  color: #a1967d;
 }

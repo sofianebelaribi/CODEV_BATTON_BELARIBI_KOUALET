@@ -9,10 +9,8 @@
 <body>
 <script type="text/javascript">
     function displayImg(val, id) {
-        var htmlStr="";
-        console.log("displayImg");
-        console.log(val);
-        if(id == "bullets"){
+        let htmlStr="";
+        if(id == "bullets-1"){
             for(let i=0; i<val; i++) {
                 htmlStr+='<img src="images/bullet.png" style="width: 20px;  transform:rotate(90deg);">';
             }
@@ -25,7 +23,6 @@
         document.getElementById(id).innerHTML = htmlStr;
     }
 </script>
-
 <div class="container">
   <div id="roomID" style="display: none;"></div>
   <div class="menu">
@@ -120,64 +117,88 @@
     </div>
   </form>
 
-  <div class="row" id="gameArea" style="display: none;">
+
+  <!-- Game gameboard  -->
+  <div id="gameArea" style="display: none;">
     <div class="row div-logo">
       <img src="007.png" class="logo" alt="">
     </div>
-    <h2 id="userHello"></h2>
+    <h2 id="roomHello" class="title"></h2>
+    <hr>
 
-    <div class="col-md-6">
-      <form class="sectionArea" id="game">
-        <h4>Choices</h4>
-
-        <input class="form-check-input" id="shoot" type="radio" name="choice" value="shoot" checked />
-        <label class="form-check-label" for="shoot">shoot</label>
-        <br />
-
-        <input class="form-check-input" id="reload" type="radio" name="choice" value="reload" />
-        <label class="form-check-label" for="reload">reload</label>
-        <br />
-
-        <input class="form-check-input" id="hedge" type="radio" name="choice" value="hedge" />
-        <label class="form-check-label" for="hedge">hedge</label>
-        <br />
-
-        <input type="submit" class="btn btn-primary" value="Submit" />
-      </form>
-
-      <div class="sectionArea">
-        <h4>Information</h4>
-        <p id="info" class="text-info">Waiting for players...</p>
-      </div>
+    <div class="row">
+      <button type="button" class="btn btn-rules btn-primary btn-home btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Règle
+      </button>
     </div>
-    <div class="col-md-2">
-      <div class="row">
-        <p>Nombre de balles dans le chargeur :</p>
-        <div id="bullets" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
-          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
-          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
-          <img src="images/bullet.png" style="width: 20px; transform:rotate(90deg);">
-        </div>
-      </div>
-      <div class="row">
-        <p>Ma vie <span id="player1"></span> :</p>
-        <div id="live-1" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
-          <img src="images/heart.png" style="width: 20px;">
-          <img src="images/heart.png" style="width: 20px;">
-          <img src="images/heart.png" style="width: 20px;">
-        </div>
-
-      </div>
-      <div class="row">
-        <p>Nombre de vie restante de l'adversaire <span id="player2"></span> :</p>
-        <div id="live-2" onload="displayImg($(this).val(), $(this).attr('id'))" onchange="displayImg($(this).val(), $(this).attr('id'))">
-          <img src="images/heart.png" style="width: 20px;">
-          <img src="images/heart.png" style="width: 20px;">
-          <img src="images/heart.png" style="width: 20px;">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Rappel des règles</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Si p1 tir et P2 recharge, P1 gagne</p>
+            <p>Si p1 tir et P2 tir, égalité</p>
+            <p>Si p1 tir et P2 bloque, égalité</p>
+            <p>Chaque joueur possède 3 vies, le premier à 0 perd</p>
+            <p>Avant de pouvoir tirer il faut s'assurer d'avoir des balles dans le chargeur</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-home btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-md-4">
+        <h2 id="p1"></h2>
+        <img src="waiting.png" class="gif" id="gif1" alt="">
+        <form class="sectionArea row no-gutters" id="game">
+          <input type="submit" class="btn btn-primary" id="submit" value="Submit" style="display:none;" />
+
+
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <p>Nombre de balles dans le chargeur :</p>
+          <div id="bullets-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          </div>
+        </div>
+        <div class="row">
+          <p>Ma vie <span id="player1"></span> :</p>
+          <div id="live-1" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          </div>
+        </div>
+        <div class="row">
+          <p>Nombre de vie restante de l'adversaire<span id="player2"></span> :</p>
+          <div id="live-2" onchange="displayImg($(this).val(), $(this).attr('id'))">
+          </div>
+        </div>
+        <div class="row sectionArea">
+          <p id="info" class="text-info">Waiting for the other player...</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h2 id="p2"></h2>
+        <img src="waiting.png" class="gif" id="gif2" alt="">
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="choice-div">
+        <button class="btn choice-button btn-primary btn-home" id="hedge" value="hedge">Hedge</button>
+        <button class="btn choice-button btn-primary btn-home" id="reload" value="reload">Reload</button>
+        <button class="btn choice-button btn-primary btn-home" id="shoot" value="shoot">Shoot</button>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -187,7 +208,5 @@
 <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
-
-
 </body>
 </html>
